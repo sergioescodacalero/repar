@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mi Tienda de Joyas - Prueba en Realidad Aumentada</title>
+  <style>
+    #probar-en-ar {
+      background-color: pink;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Producto: Pulsera de plata</h1>
+  <p>Descripción del producto:</p>
+  <p>...</p>
+  <button id="probar-en-ar">Probar en Realidad Aumentada</button>
+  
+  <script>
+    // Función que se ejecuta cuando se hace clic en el botón
+    function abrirModuloAR() {
+      // Comprobamos si el dispositivo es compatible con ARKit o ARCore
+      if (window.webkit && window.webkit.ar && window.webkit.ar.Session && window.webkit.ar.Session.isSupported) {
+        // Si es compatible, abrimos el módulo de realidad aumentada
+        window.webkit.ar.Session.request({mode: 'world'}).then(function(session) {
+          // Cargamos el modelo 3D de la pulsera
+          var pulseraModelo = new THREE.Object3D();
+          // Aquí iría el código para cargar el modelo en el objeto 3D
+          // ...
+          // Creamos un objeto ARAnchor para colocar la pulsera en la realidad aumentada
+          var anchor = new THREE.Group();
+          anchor.add(pulseraModelo);
+          session.addARAnchor(anchor);
+        }).catch(function(error) {
+          console.error('No se pudo abrir el módulo de realidad aumentada: ' + error);
+        });
+      } else {
+        // Si no es compatible, mostramos un mensaje al usuario
+        alert('Tu dispositivo no es compatible con la realidad aumentada.');
+      }
+    }
+    
+    // Asignamos la función al evento click del botón
+    document.getElementById('probar-en-ar').addEventListener('click', abrirModuloAR);
+  </script>
+</body>
+</html>
